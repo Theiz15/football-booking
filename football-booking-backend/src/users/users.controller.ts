@@ -13,8 +13,8 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private userService: UsersService) { }
 
-    @Get()
-    getUsers() {
-        return this.userService.getUsers();
-    }
+    // @Get()
+    // getUsers() {
+    //     return this.userService.getUsers();
+    // }
 }

@@ -10,6 +10,8 @@ import { Request, Response } from 'express';
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
+
+    console.error(exception);
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
@@ -32,7 +34,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         message = res.message || message;
         errorCode = res.errorCode || errorCode;
       }
-    } 
+    }
     else if (exception instanceof Error) {
       message = exception.message || message;
     }

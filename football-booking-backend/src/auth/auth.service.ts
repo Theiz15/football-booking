@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/request/Register.dto';
 import { LoginDto } from './dto/request/login.dto';
-import { User } from '../users/user.entity';
+import { User } from '../entities/user.entity';
 import { BusinessException } from 'src/common/exceptions/business.exception';
 import { ERROR_CODES } from 'src/common/constants/error-codes';
 
@@ -14,10 +14,10 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(registerDto: RegisterDto) {
-    const { fullName, phone , email, password } = registerDto;
+    const { fullName, phone, email, password } = registerDto;
 
     const existingUser = await this.usersService.findByPhone(phone);
     if (existingUser) {
@@ -65,10 +65,10 @@ export class AuthService {
 
   private async generateToken(user: User) {
     const payload = { sub: user.id, phone: user.phone, role: user.role };
-    
+
     return {
       accessToken: await this.jwtService.signAsync(payload),
-      user: user, 
+      user: user,
     };
   }
 }

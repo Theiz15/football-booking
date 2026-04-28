@@ -30,5 +30,33 @@ export const ERROR_CODES = {
     code: 'FORBIDDEN',
     status: HttpStatus.FORBIDDEN,
     defaultMessage: 'Bạn không có quyền truy cập tài nguyên này',
-  }
+  },
+  FILE_REQUIRED: {
+    code: 'FILE_REQUIRED',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'File is required',
+  },
+  INVALID_FILE_TYPE: {
+    code: 'INVALID_FILE_TYPE',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Chỉ chấp nhận định dạng ảnh JPEG, PNG, WEBP',
+  },
+  FILE_TOO_LARGE: {
+    code: 'FILE_TOO_LARGE',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Dung lượng ảnh không được vượt quá 5MB',
+  }, 
+  COURT_CREATION_FAILED: {
+    code: 'COURT_CREATION_FAILED',
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    defaultMessage: 'Lỗi khi tạo sân',
+  },
+  COURT_NOT_FOUND: {
+    code: 'COURT_NOT_FOUND',
+    status: HttpStatus.NOT_FOUND,
+    defaultMessage: 'Không tìm thấy sân',
+  },
+  
+
+
 } as const;

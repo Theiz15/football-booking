@@ -1,11 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { UserRole } from '../common/constants/enums';
 
-export enum UserRole {
-    ADMIN = 'admin',
-    MANAGER = 'manager',
-    CUSTOMER = 'customer',
-}
 
 @Entity('users')
 export class User {

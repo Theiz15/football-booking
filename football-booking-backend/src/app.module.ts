@@ -3,11 +3,12 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CourtsModule } from './courts/courts.module';
+import { Booking } from './entities/booking.entity';
 
 
 @Module({
   imports: [
-    // 1. Load file .env
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -28,7 +29,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         synchronize: true,
       }),
     }),
-    UsersModule, AuthModule],
+    UsersModule, AuthModule, CourtsModule
+  ],
   controllers: [],
   providers: [],
 })

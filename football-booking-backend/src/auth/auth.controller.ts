@@ -9,7 +9,7 @@ import { Public } from './decorators/public.decorator';
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
-    @Public() // Đánh dấu endpoint này là public, không cần JWT
+    @Public() 
     @Post('register')
     async register(@Body() registerDto: RegisterDto): Promise<ApiResponseDto<null>> {
         await this.authService.register(registerDto);
@@ -18,7 +18,7 @@ export class AuthController {
         );
     }
 
-    @Public() // Đánh dấu endpoint này là public, không cần JWT
+    @Public()
     @UseInterceptors(ClassSerializerInterceptor)
     @HttpCode(HttpStatus.OK)
     @Post('login')

@@ -56,7 +56,26 @@ export const ERROR_CODES = {
     status: HttpStatus.NOT_FOUND,
     defaultMessage: 'Không tìm thấy sân',
   },
+  DUPLICATE_START_TIMES: {
+    code: 'DUPLICATE_START_TIMES',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Các startTime trong cùng một ngày không được trùng nhau',
+  },
+  TIME_SLOT_NOT_FOUND: {
+    code: 'TIME_SLOT_NOT_FOUND',
+    status: HttpStatus.NOT_FOUND,
+    defaultMessage: 'Không tìm thấy khung giờ',
+  },
+  TIME_SLOTS_OVERLAP: {
+    code: 'TIME_SLOTS_OVERLAP',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Các khung giờ bị chồng lấn (overlap)',
+  },
+  INVALID_TIME_RANGE: {
+    code: 'INVALID_TIME_RANGE',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Khoảng thời gian không hợp lệ',
+  },
   
-
 
 } as const;

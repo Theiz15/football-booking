@@ -1,13 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, Index, Unique, UpdateDateColumn } from 'typeorm';
 import { Court } from './court.entity';
 
 @Entity('time_slots')
 @Index(['courtId', 'slotDate'])
+@Unique(['courtId', 'slotDate', 'startTime'])
 export class TimeSlot {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'court_id' })
+  @Column({ name: 'court_id', type: 'uuid' })
   courtId: string;
 
   @ManyToOne(() => Court, (court) => court.timeSlots)
@@ -29,6 +30,9 @@ export class TimeSlot {
   @Column({ name: 'is_available', default: true })
   isAvailable: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: Date;
 }

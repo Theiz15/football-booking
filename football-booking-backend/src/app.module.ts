@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CourtsModule } from './courts/courts.module';
 import { Booking } from './entities/booking.entity';
+import { TimeSlotsModule } from './time-slots/time-slots.module';
 
 
 @Module({
@@ -29,7 +30,7 @@ import { Booking } from './entities/booking.entity';
         synchronize: true,
       }),
     }),
-    UsersModule, AuthModule, CourtsModule
+    UsersModule, AuthModule, CourtsModule, TimeSlotsModule 
   ],
   controllers: [],
   providers: [],

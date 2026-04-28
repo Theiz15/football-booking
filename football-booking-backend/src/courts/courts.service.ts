@@ -10,6 +10,7 @@ import { ERROR_CODES } from 'src/common/constants/error-codes';
 import { CourtResponseDto } from './dto/court-response.dto';
 import { PaginatedResponseDto } from 'src/common/dto/paginated-response.dto';
 import { QueryCourtDto } from './dto/query-court.dto';
+import { UserRole } from 'src/common/constants/enums';
 
 @Injectable()
 export class CourtsService {
@@ -107,11 +108,60 @@ export class CourtsService {
 
         const skip = (page - 1) * limit;
         qb.skip(skip).take(limit);
-        
+
         qb.orderBy('court.createdAt', 'DESC');
 
         const [courts, total] = await qb.getManyAndCount();
         const data = courts.map(court => new CourtResponseDto(court));
         return new PaginatedResponseDto(data, total, page, limit);
+    }
+
+
+    async getSchedule(courtId: string, date: string, userRole: UserRole | string = UserRole.CUSTOMER) {
+        const court = await this.courtsRepository.findOne({ where: { id: courtId } });
+        if (!court) {
+            throw new BusinessException(ERROR_CODES.COURT_NOT_FOUND);
+        }
+
+        const timeSlots = await this.courtsRepository.query(
+            `SELECT ts.id,  ts.start_time as "startTime", ts.end_time as "endTime", ts.is_available AS "isAvailable",
+            COALESCE(ts.price_override, c.price_per_hour) AS "effectivePrice",
+            b.status AS "status", b.staff_note AS "staffNote", b.customer_note AS "customerNote",
+            u.full_name AS "bookerName", u.phone AS "bookerPhone"
+            FROM time_slot ts
+            JOIN courts c ON c.id = ts.court_id
+            LEFT JOIN booking b ON ts.id = b.time_slot_id AND b.status NOT IN ('CANCELLED', 'NO_SHOW')
+            LEFT JOIN users u ON b.user_id = u.id
+            WHERE ts.court_id = $1 AND ts.slot_date = $2
+            ORDER BY ts.start_time ASC`,
+            [courtId, date]
+        );
+
+        const isManagerOrAdmin = userRole === UserRole.MANAGER || userRole === UserRole.ADMIN;
+
+        const slots = timeSlots.map((slot) => {
+            const result: any = {
+                id: slot.id,
+                startTime: slot.startTime,
+                endTime: slot.endTime,
+                isAvailable: slot.isAvailable,
+                effectivePrice: Number(slot.effectivePrice),
+                status: slot.status || null,
+            };
+
+            if (slot.status && isManagerOrAdmin) {
+                result.bookerName = slot.bookerName || null;
+                result.bookerPhone = slot.bookerPhone || null;
+                result.staffNote = slot.staffNote || null;
+            }
+
+
+            return result;
+        });
+
+        return {
+            date,
+            slots,
+        };
     }
 }

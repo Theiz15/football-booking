@@ -76,6 +76,21 @@ export const ERROR_CODES = {
     status: HttpStatus.BAD_REQUEST,
     defaultMessage: 'Khoảng thời gian không hợp lệ',
   },
+  TIME_SLOT_UNAVAILABLE: {
+    code: 'TIME_SLOT_UNAVAILABLE',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Khung giờ không khả dụng',
+  },
+  INVALID_COURT: {  
+    code: 'INVALID_COURT',
+    status: HttpStatus.BAD_REQUEST, 
+    defaultMessage: 'Court không khớp với slot',
+  },
+  SLOT_HOLD_FAILED: {
+    code: 'SLOT_HOLD_FAILED',
+    status: HttpStatus.BAD_REQUEST,
+    defaultMessage: 'Giữ slot thất bại',
+  },
   
 
 } as const;

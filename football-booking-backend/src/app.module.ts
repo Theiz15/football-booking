@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CourtsModule } from './courts/courts.module';
 import { Booking } from './entities/booking.entity';
 import { TimeSlotsModule } from './time-slots/time-slots.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { RedisModule } from './common/redis/redis.module';
 
 
 @Module({
@@ -30,7 +32,7 @@ import { TimeSlotsModule } from './time-slots/time-slots.module';
         synchronize: true,
       }),
     }),
-    UsersModule, AuthModule, CourtsModule, TimeSlotsModule 
+    UsersModule, AuthModule, CourtsModule, TimeSlotsModule, BookingsModule ,RedisModule
   ],
   controllers: [],
   providers: [],
